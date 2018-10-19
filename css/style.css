@@ -1,14 +1,19 @@
-main, header {
+header {
   width: 100%;
   margin-left: auto;
   margin-right: auto;
 }
-
+main {
+  display:flex;
+}
 p, h1 {
   text-align: center;
 }
-
+div {
+  width: 50%
+}
 img {
-  width: 49%;
+  width: 100%;
+  height: 399px;
   cursor: pointer;
 }

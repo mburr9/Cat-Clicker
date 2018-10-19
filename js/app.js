@@ -1,7 +1,14 @@
 let clicks = 0;
-$('.first-cat').click(function() {
+$('#minerva').click(function() {
   $('.clicks').html(clicks += 1);
 });
-$('.second-cat').click(function() {
+$('#gus').click(function() {
   $('.clicks').html(clicks += 1);
+});
+
+let catNames = ['Minerva', 'Gus'];
+$(function() {
+  $('.cat').each(function(i) {
+    $(this).append(`<p>${catNames[i]}<p>`);
+  });
 });
