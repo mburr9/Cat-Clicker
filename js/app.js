@@ -96,6 +96,7 @@ $(function(){
 
     render: function() {
               let currentCat = octopus.getCurrentCat();
+              $('.name').html(currentCat.name);
               $('.cat-pic').attr({
                 src: `images/${currentCat.imageUrl}.jpg`,
                 alt: currentCat.desc
