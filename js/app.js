@@ -2,6 +2,7 @@ $(function(){
 
   const model = {
     currentCat: null,
+    adminVisible: false,
     cats: [
       {
         name: 'Minerva',
@@ -58,11 +59,22 @@ $(function(){
     changeClicks: function() {
       model.currentCat.clicks += 1;
       catView.render();
+    },
+
+    showAdmin: function() {
+      model.adminVisible = true;
+      catView.render();
+    },
+
+    hideAdmin: function() {
+      model.adminVisible = false;
+      catView.render();
+    },
+
+    getAdminStatus: function() {
+      return model.adminVisible;
     }
-
-
-
-  }
+  };
 
   const catListView = {
     init: function() {
@@ -91,6 +103,12 @@ $(function(){
       $('.cat-pic').click(function() {
         octopus.changeClicks();
       });
+      $('#admin').click(function() {
+        octopus.showAdmin();
+      });
+      $('.hide').click(function() {
+        octopus.hideAdmin();
+      });
       this.render();
     },
 
@@ -102,6 +120,14 @@ $(function(){
                 alt: currentCat.desc
               });
               $('.clicks').html(currentCat.clicks);
+              let adminVisible = octopus.getAdminStatus();
+              if (adminVisible === true) {
+                $('.cat-info').removeClass('invisible');
+              } else {
+                $('.cat-info').addClass('invisible');
+              }
+
+
     }
 
   };

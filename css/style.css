@@ -19,6 +19,6 @@ img {
   height: 399px;
   cursor: pointer;
 }
-.cat-info {
+.invisible {
   visibility: hidden;
 }
