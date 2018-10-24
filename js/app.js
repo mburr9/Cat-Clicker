@@ -6,31 +6,31 @@ $(function(){
     cats: [
       {
         name: 'Minerva',
-        imageUrl: 'minerva',
+        imageUrl: 'images/minerva.jpg',
         desc: 'cat sitting on a pumpkin',
         clicks: 0
       },
       {
         name: 'Gus',
-        imageUrl: 'gus',
+        imageUrl: 'images/gus.jpg',
         desc: 'cat laying outside',
         clicks: 0
       },
       {
         name: 'Ralph',
-        imageUrl: 'ralph',
+        imageUrl: 'images/ralph.jpg',
         desc: 'cat laying inside',
         clicks: 0
       },
       {
         name: 'Reggie',
-        imageUrl: 'reggie',
+        imageUrl: 'images/reggie.jpg',
         desc: 'cat laying with crazy eyes',
         clicks: 0
       },
       {
         name: 'Sam',
-        imageUrl: 'sam',
+        imageUrl: 'images/sam.jpg',
         desc: 'cat sitting like a human',
         clicks: 0
       }
@@ -42,6 +42,8 @@ $(function(){
             model.currentCat = model.cats[0];
             catListView.init();
             catView.init();
+            adminView.init();
+
     },
 
     getCats: function() {
@@ -71,6 +73,15 @@ $(function(){
       catView.render();
     },
 
+    changeInfo: function() {
+      model.currentCat.name = $('.admin-name').children('input').val();
+      model.currentCat.imageUrl = $('.admin-url').children('input').val();
+      model.currentCat.clicks = parseInt($('.admin-clicks').children('input').val());
+      catListView.render();
+      this.hideAdmin();
+      catView.render();
+    },
+
     getAdminStatus: function() {
       return model.adminVisible;
     }
@@ -78,11 +89,13 @@ $(function(){
 
   const catListView = {
     init: function() {
+      this.catList = $('.cat-list');
       this.render();
     },
 
     render: function() {
               let allCats = octopus.getCats();
+              this.catList.html('');
               for (let i = 0; i < allCats.length; i++) {
                 let elem = document.createElement('li');
                 elem.textContent = allCats[i].name;
@@ -97,6 +110,25 @@ $(function(){
 
     }
   };
+  const adminView = {
+    init: function() {
+      $('.cancel').click(function() {
+        octopus.hideAdmin();
+      });
+      $('.save').click(function() {
+        octopus.changeInfo();
+      });
+
+      this.render();
+    },
+
+    render: function() {
+      let currentCat = octopus.getCurrentCat();
+      $('.admin-name').children('input').attr('value', currentCat.name);
+      $('.admin-url').children('input').attr('value', currentCat.imageUrl);
+      $('.admin-clicks').children('input').attr('value', currentCat.clicks);
+    }
+  };
 
   const catView = {
     init: function() {
@@ -106,9 +138,7 @@ $(function(){
       $('#admin').click(function() {
         octopus.showAdmin();
       });
-      $('.hide').click(function() {
-        octopus.hideAdmin();
-      });
+
       this.render();
     },
 
@@ -116,7 +146,7 @@ $(function(){
               let currentCat = octopus.getCurrentCat();
               $('.name').html(currentCat.name);
               $('.cat-pic').attr({
-                src: `images/${currentCat.imageUrl}.jpg`,
+                src: currentCat.imageUrl,
                 alt: currentCat.desc
               });
               $('.clicks').html(currentCat.clicks);
